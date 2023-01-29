@@ -1,6 +1,10 @@
 <div class="container-show">
   <div class="company-header">
-    <%= cl_image_tag @company.photo.key, width: 100 %>
+    <% if company.photo.attached? %>
+      <%= cl_image_tag @company.photo.key, width: 100 %>
+    <% else %>
+      <% false %>
+    <% end %>
     <h2 class="company-name"> <%= @company.company_name.capitalize %></h2>
   </div>
 
