@@ -1,6 +1,6 @@
 <div class="container-show">
   <div class="company-header">
-    <% if company.photo.attached? %>
+    <% if @company.photo.attached? %>
       <%= cl_image_tag @company.photo.key, width: 100 %>
     <% else %>
       <% false %>
