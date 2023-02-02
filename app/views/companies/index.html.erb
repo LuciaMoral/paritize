@@ -18,25 +18,25 @@
   </div>
 </div>
 
+<% unless @companies.nil? %>
+  <% @companies = @companies.sort_by { |company| company.gender_ratings.first.average_rating}.reverse %>
 
-<% @companies = @companies.sort_by { |company| company.gender_ratings.first.average_rating}.reverse %>
+  <div class="company-cards">
+    <% @companies.each do | company | %>
 
-<div class="company-cards">
-  <% @companies.each do | company | %>
-
-    <div class="company_card m-3">
-      <div class="company_card_info">
-        <% if company.photo.key != nil %>
-          <%= link_to company_path(company) do %>
-            <%= cl_image_tag company.photo.key, class: "company_card_img" %>
+      <div class="company_card m-3">
+        <div class="company_card_info">
+          <% if company.photo.key != nil %>
+            <%= link_to company_path(company) do %>
+              <%= cl_image_tag company.photo.key, class: "company_card_img" %>
+            <% end %>
           <% end %>
-        <% end %>
-        <div class="card-details">
-          <h3><%= link_to company.company_name, company_path(company) %></h3>
-          <p><%= company.hq_location %></p>
+          <div class="card-details">
+            <h3><%= link_to company.company_name, company_path(company) %></h3>
+            <p><%= company.hq_location %></p>
+          </div>
         </div>
-      </div>
-
+<% end %>
       <div class="rating-bookmark">
         <div class="rating">
           <% if company.gender_ratings.first.average_rating >= 50 %>
