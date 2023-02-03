@@ -18,8 +18,8 @@
   </div>
 </div>
 
-<% unless @companies.nil? %>
-  <% @companies = @companies.sort_by { |company| company.gender_ratings.first.average_rating}.reverse %>
+
+<% @companies = @companies.sort_by { |company| company.gender_ratings.first.average_rating}.reverse %>
 
   <div class="company-cards">
     <% @companies.each do | company | %>
@@ -36,31 +36,31 @@
             <p><%= company.hq_location %></p>
           </div>
         </div>
-<% end %>
-      <div class="rating-bookmark">
-        <div class="rating">
-          <% if company.gender_ratings.first.average_rating >= 50 %>
-            <div class="circle-rating-green"></div>
-          <% elsif company.gender_ratings.first.average_rating <= 29 %>
-            <div class="circle-rating-orange"></div>
-          <% else company.gender_ratings.first.average_rating %>
-            <div class="circle-rating-red"></div>
+
+        <div class="rating-bookmark">
+          <div class="rating">
+            <% if company.gender_ratings.first.average_rating >= 50 %>
+              <div class="circle-rating-green"></div>
+            <% elsif company.gender_ratings.first.average_rating <= 29 %>
+              <div class="circle-rating-orange"></div>
+            <% else company.gender_ratings.first.average_rating %>
+              <div class="circle-rating-red"></div>
+            <% end %>
+            <h4><%=company.gender_ratings.first.average_rating.round(2) %>%</h4>
+          </div>
+
+          <% if company.bookmarks.find { |bookmark| bookmark.user == current_user} != nil %>
+            <%= button_to bookmark_path(company.bookmarks.find { |bookmark| bookmark.user == current_user}), method: :delete  do %>
+              <i class="fas fa-bookmark bookmarked"></i>
+            <% end %>
+
+          <% else %>
+            <%= button_to(company_bookmarks_path(company.id), method: :post) do %>
+              <i class="fas fa-bookmark unbookmarked"></i>
+            <% end %>
           <% end %>
-          <h4><%=company.gender_ratings.first.average_rating.round(2) %>%</h4>
         </div>
-
-        <% if company.bookmarks.find { |bookmark| bookmark.user == current_user} != nil %>
-          <%= button_to bookmark_path(company.bookmarks.find { |bookmark| bookmark.user == current_user}), method: :delete  do %>
-            <i class="fas fa-bookmark bookmarked"></i>
-          <% end %>
-
-        <% else %>
-          <%= button_to(company_bookmarks_path(company.id), method: :post) do %>
-            <i class="fas fa-bookmark unbookmarked"></i>
-          <% end %>
-        <% end %>
       </div>
-    </div>
 
-  <% end %>
-</div>
+    <% end %>
+  </div>
